@@ -20,6 +20,8 @@ interface Auth {
 
 export type PathRequest<T> = Path<T>
 
+export type AuthPathRequest<T> = Auth & Path<T>
+
 export type BodyRequest<T> = Body<T>
 
 export type BodyPathRequest<T1, T2> = Body<T1> & Path<T2>
