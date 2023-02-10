@@ -6,3 +6,4 @@ export {
     ApiMethodAccess
 }
 export * from "./api.handler"
+export * from "./api.scope"
