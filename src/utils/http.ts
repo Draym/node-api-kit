@@ -7,19 +7,19 @@ import Auth from "../api/auth"
 import {logger} from "./logger"
 import {httpsOverHttp} from "tunnel"
 
-export interface ErrorResponse {
+interface ErrorResponse {
     message: string
     code: string
 }
 
-export enum ApiError {
+export enum HttpApiError {
     UNAUTHORIZED = "unauthorized",
     SERVER_ERROR = "server_error",
     OTHER = "other"
 }
 
-export interface ErrorDTO {
-    type: ApiError
+export interface HttpError {
+    type: HttpApiError
     message: string
     code: string | undefined
 }
@@ -31,12 +31,12 @@ export class ServerProxy {
     } | null = null
 }
 
-export interface GetParam {
+export interface HttpGetParam {
     path?: { [key: string]: string | null | undefined } | null
     query?: { [key: string]: string | null | undefined } | null
 }
 
-export class PostParam {
+export class HttpPostParam {
     path?: { [key: string]: string | null | undefined } | null
     query?: { [key: string]: string | null | undefined } | null
     body?: { [key: string]: any } | null
@@ -92,7 +92,7 @@ export default class Http {
     private static handleHttpResult<T>(
         response: AxiosResponse,
         onSuccess: (data: T) => void,
-        onError: (error: ErrorDTO) => void) {
+        onError: (error: HttpError) => void) {
         logger.success('[HTTP]', response.data)
 
         const status = response.status
@@ -103,25 +103,25 @@ export default class Http {
             onError({
                 message: error.message,
                 code: error.code,
-                type: ApiError.SERVER_ERROR
+                type: HttpApiError.SERVER_ERROR
             })
         }
     }
 
-    private static handleHttpError(error, onError: (error: ErrorDTO) => void) {
+    private static handleHttpError(error, onError: (error: HttpError) => void) {
         logger.error('[API][ERROR]-->', error)
         if (isNotNull(error?.response?.data)) {
             const data = error.response.data
             onError({
                 message: isNotEmpty(data.message) ? data.message : JSON.stringify(data),
                 code: data.code,
-                type: ApiError.SERVER_ERROR
+                type: HttpApiError.SERVER_ERROR
             })
         } else {
             onError({
                 message: JSON.stringify(error.error),
                 code: undefined,
-                type: ApiError.OTHER
+                type: HttpApiError.OTHER
             })
         }
     }
@@ -142,9 +142,9 @@ export default class Http {
         domain: string | null,
         endpoint: string,
         headers: { [key: string]: string },
-        params: GetParam,
+        params: HttpGetParam,
         onSuccess: (data: T) => void,
-        onError: (error: ErrorDTO) => void) {
+        onError: (error: HttpError) => void) {
 
         const urlParameters: string = this.stringifyParameters(params.query)
         const finalEndpoint: string = this.fillEndpoint(endpoint, params.path)
@@ -175,9 +175,9 @@ export default class Http {
         domain: string | null,
         endpoint: string,
         headers: { [key: string]: string },
-        params: PostParam,
+        params: HttpPostParam,
         onSuccess: (data: T) => void,
-        onError: (error: ErrorDTO) => void) {
+        onError: (error: HttpError) => void) {
 
         const urlParameters: string = this.stringifyParameters(params.query)
         const finalEndpoint = this.fillEndpoint(endpoint, params.path)
@@ -209,14 +209,14 @@ export default class Http {
         })
     }
 
-    static get<T>(domain: string | null, endpoint: string, auth: Auth | null, params: GetParam, onSuccess: (data: T) => void, onError: (error: ErrorDTO) => void) {
+    static get<T>(domain: string | null, endpoint: string, auth: Auth | null, params: HttpGetParam, onSuccess: (data: T) => void, onError: (error: HttpError) => void) {
         const headers: { [key: string]: string } = {}
         headers['Access-Control-Allow-Origin'] = '*'
         auth?.populateHeader(headers)
         this.httpURL('GET', domain, endpoint, headers, params, onSuccess, onError)
     }
 
-    static post<T>(domain: string | null, endpoint: string, auth: Auth | null, params: PostParam, onSuccess: (data: T) => void, onError: (error: ErrorDTO) => void, type: string = 'application/json') {
+    static post<T>(domain: string | null, endpoint: string, auth: Auth | null, params: HttpPostParam, onSuccess: (data: T) => void, onError: (error: HttpError) => void, type: string = 'application/json') {
         const headers: { [key: string]: string } = {}
         headers['Content-Type'] = type
         headers['Accept'] = 'application/json'
@@ -224,7 +224,7 @@ export default class Http {
         this.httpData('POST', domain, endpoint, headers, params, onSuccess, onError)
     }
 
-    static put<T>(domain: string | null, endpoint: string, auth: Auth | null, params: PostParam, onSuccess: (data: T) => void, onError: (error: ErrorDTO) => void, type: string = 'application/json') {
+    static put<T>(domain: string | null, endpoint: string, auth: Auth | null, params: HttpPostParam, onSuccess: (data: T) => void, onError: (error: HttpError) => void, type: string = 'application/json') {
         const headers: { [key: string]: string } = {}
         headers['Content-Type'] = type
         headers['Accept'] = 'application/json'
@@ -232,7 +232,7 @@ export default class Http {
         this.httpData('PUT', domain, endpoint, headers, params, onSuccess, onError)
     }
 
-    static delete<T>(domain: string | null, endpoint: string, auth: Auth | null, params: PostParam, onSuccess: (data: T) => void, onError: (error: ErrorDTO) => void, type: string = 'application/json') {
+    static delete<T>(domain: string | null, endpoint: string, auth: Auth | null, params: HttpPostParam, onSuccess: (data: T) => void, onError: (error: HttpError) => void, type: string = 'application/json') {
         const headers: { [key: string]: string } = {}
         headers['Content-Type'] = type
         headers['Accept'] = 'application/json'
