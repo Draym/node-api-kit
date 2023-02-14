@@ -15,7 +15,7 @@ interface Path<T> {
 
 interface Auth {
     auth: AuthData
-    user: CallerData
+    caller: CallerData
 }
 
 export type PathRequest<T> = Path<T>

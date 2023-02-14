@@ -1,10 +1,21 @@
+export interface DataStoredInToken {
+  userId: number
+  userUuid: string
+  jti: string
+}
+
+export interface DataStoredInApiKey {
+  appId: number
+  ownerId: number
+  ownerUuid: string
+}
+
 export interface AuthData {
-  token: string | null
-  apiKey: string | null
+  token: DataStoredInToken | null
+  apiKey: DataStoredInApiKey | null
 }
 
 export interface CallerData {
   id: number
-  identifier: string
-  email: string
+  uuid: string
 }
