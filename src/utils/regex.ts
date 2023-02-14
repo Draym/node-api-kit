@@ -1,4 +1,4 @@
-export default class Regex {
+export class Regex {
     public static hasNumber(data) {
         return /\d/.test(data);
     }

@@ -42,7 +42,7 @@ export class HttpPostParam {
     body?: { [key: string]: any } | null
 }
 
-export default class Http {
+export class Http {
 
     private static stringifyParameters(parameters: { [key: string]: string | string[] | null | undefined } | null): string {
         if (isNull(parameters)) {
