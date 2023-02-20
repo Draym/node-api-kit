@@ -1,6 +1,22 @@
 import {isNotEmpty, isNull} from "../checks"
 import Op from "./op"
 
+export function eq(filters: { [key: string]: string | number | boolean | null | undefined}): Filter {
+    return new Filter().equals(filters)
+}
+export function gt(filters: { [key: string]: Date | null | undefined}): Filter {
+    return new Filter().gt(filters)
+}
+export function lt(filters: { [key: string]: Date | null | undefined}): Filter {
+    return new Filter().lt(filters)
+}
+export function include(filters: { [key: string]: string[] | number[] | null | undefined}): Filter {
+    return new Filter().in(filters)
+}
+export function like(filters: { [key: string]: string | null | undefined}): Filter {
+    return new Filter().like(filters)
+}
+
 export class Filter {
 
     private where = {}
@@ -71,5 +87,9 @@ export class Filter {
         return {
             where: this.where
         }
+    }
+
+    public stringify(): string {
+        return JSON.stringify(this.where)
     }
 }
