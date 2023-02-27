@@ -46,3 +46,18 @@ export const isString = (data: any) => {
 export const isNumber = (data: any) => {
     return typeof data === 'number' || data instanceof Number || Number.isFinite(data)
 }
+
+export const isBoolean = (data: any) => {
+    return typeof data === 'boolean'
+}
+
+export const isDate = (data: any) => {
+    return data instanceof Date || (isString(data) && !isNaN(Date.parse(data)))
+}
+
+export const isObject = (data: any) => {
+    return isNotNull(data) && typeof data === 'object' && !isArray(data)
+}
+export const isArray = (data: any) => {
+    return Array.isArray(data)
+}
