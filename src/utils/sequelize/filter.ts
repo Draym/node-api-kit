@@ -1,5 +1,6 @@
 import {isNotEmpty, isNull} from "../checks"
 import Op from "./op"
+import {Page} from "./page"
 
 export function eq(filters: { [key: string]: string | number | boolean | null | undefined}): Filter {
     return new Filter().equals(filters)
@@ -17,7 +18,12 @@ export function like(filters: { [key: string]: string | null | undefined}): Filt
     return new Filter().like(filters)
 }
 
+export function paginate(page: Page): Filter {
+    return new Filter().paginate(page)
+}
+
 export class Filter {
+    private page: Page | null = null
 
     private where = {}
 
@@ -75,6 +81,11 @@ export class Filter {
         return this
     }
 
+    public paginate(page: Page): Filter {
+        this.page = page
+        return this
+    }
+
     private merge(key: string, data: {}) {
         if (isNull(this.where[key])) {
             this.where[key] = data
@@ -84,9 +95,14 @@ export class Filter {
     }
 
     public get() {
-        return {
+        const query = {
             where: this.where
         }
+
+        if (isNull(this.page)) {
+            return this.page.paginate(query)
+        }
+        return query
     }
 
     public stringify(): string {
