@@ -1,7 +1,14 @@
-function escapeRegExp(string) {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+function escapeRegExp(str: string) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
 
-export function replaceAll(str, find, replace) {
+export function replaceAll(str: string, find: string, replace: string) {
     return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
+}
+
+export function orderWords(str: string) {
+    return str
+        .split(" ")
+        .sort()
+        .join(" ")
 }
