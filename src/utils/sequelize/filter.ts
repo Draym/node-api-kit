@@ -5,10 +5,10 @@ import {Page} from "./page"
 export function eq(filters: { [key: string]: string | number | boolean | null | undefined}): Filter {
     return new Filter().equals(filters)
 }
-export function gt(filters: { [key: string]: Date | null | undefined}): Filter {
+export function gt(filters: { [key: string]: Date | number | null | undefined}): Filter {
     return new Filter().gt(filters)
 }
-export function lt(filters: { [key: string]: Date | null | undefined}): Filter {
+export function lt(filters: { [key: string]: Date | number | null | undefined}): Filter {
     return new Filter().lt(filters)
 }
 export function include(filters: { [key: string]: string[] | number[] | null | undefined}): Filter {
@@ -59,7 +59,7 @@ export class Filter {
         return this
     }
 
-    public gt(filters: { [key: string]: Date | null | undefined}, equals: boolean = true): Filter {
+    public gt(filters: { [key: string]: Date | number | null | undefined}, equals: boolean = true): Filter {
         for (const key in filters) {
             if (isNotEmpty(filters[key])) {
                 this.merge(key, {
@@ -70,7 +70,7 @@ export class Filter {
         return this
     }
 
-    public lt(filters: { [key: string]: Date | null | undefined}, equals: boolean = true): Filter {
+    public lt(filters: { [key: string]: Date | number | null | undefined}, equals: boolean = true): Filter {
         for (const key in filters) {
             if (isNotEmpty(filters[key])) {
                 this.merge(key, {
