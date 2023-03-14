@@ -96,8 +96,8 @@ export class Http {
 
         const status = response.status
         if (status === 200) {
-            logger.success(`[HTTP] ${response.data.data}`)
-            onSuccess(response.data.data)
+            logger.success(`[HTTP] ${response.data}`)
+            onSuccess(response.data)
         } else {
             const error: ErrorResponse = response.data
             onError({
