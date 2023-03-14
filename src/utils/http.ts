@@ -93,10 +93,10 @@ export class Http {
         response: AxiosResponse,
         onSuccess: (data: T) => void,
         onError: (error: HttpError) => void) {
-        logger.success('[HTTP]', response.data)
 
         const status = response.status
         if (status === 200) {
+            logger.success('[HTTP]', response.data)
             onSuccess(response.data)
         } else {
             const error: ErrorResponse = response.data
