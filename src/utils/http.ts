@@ -96,8 +96,8 @@ export class Http {
 
         const status = response.status
         if (status === 200) {
-            logger.success('[HTTP]', response.data)
-            onSuccess(response.data)
+            logger.success(`[HTTP] ${response.data.data}`)
+            onSuccess(response.data.data)
         } else {
             const error: ErrorResponse = response.data
             onError({
@@ -109,7 +109,7 @@ export class Http {
     }
 
     private static handleHttpError(error, onError: (error: HttpError) => void) {
-        logger.error('[API][ERROR]-->', error)
+        logger.error(`[API][ERROR]--> ${error}`)
         if (isNotNull(error?.response?.data)) {
             const data = error.response.data
             onError({

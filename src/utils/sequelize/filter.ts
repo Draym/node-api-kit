@@ -1,4 +1,4 @@
-import {isNotEmpty, isNull} from "../checks"
+import {isNotEmpty, isNotNull, isNull} from "../checks"
 import Op from "./op"
 import {Page} from "./page"
 
@@ -99,7 +99,7 @@ export class Filter {
             where: this.where
         }
 
-        if (isNull(this.page)) {
+        if (isNotNull(this.page)) {
             return this.page.paginate(query)
         }
         return query
