@@ -69,14 +69,14 @@ export class Http {
         return result
     }
 
-    private static fillEndpoint(endpoint, path: { [key: string]: string | null | undefined } | null): string {
+    static fillEndpoint(endpoint, path: { [key: string]: string | null | undefined } | null): string {
         if (isNull(path)) {
             return endpoint
         }
         for (let i in path) {
             const param = path[i]
             if (isNotNull(param)) {
-                endpoint = endpoint.replace(`{${i}}`, param)
+                endpoint = endpoint.replace(`:${i}`, param)
             }
         }
         return endpoint
@@ -96,7 +96,7 @@ export class Http {
 
         const status = response.status
         if (status === 200) {
-            logger.success(`[HTTP] ${response.data}`)
+            logger.success(`[HTTP] ${JSON.stringify(response.data)}`)
             onSuccess(response.data)
         } else {
             const error: ErrorResponse = response.data
@@ -109,7 +109,7 @@ export class Http {
     }
 
     private static handleHttpError(error, onError: (error: HttpError) => void) {
-        logger.error(`[API][ERROR]--> ${error}`)
+        logger.error(`[API][ERROR]--> ${JSON.stringify(error)}`)
         if (isNotNull(error?.response?.data)) {
             const data = error.response.data
             onError({
