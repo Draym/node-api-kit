@@ -4,8 +4,8 @@ import * as http from "http"
 import * as https from "https"
 import {URLSearchParams} from "url"
 import Auth from "../api/auth"
-import {logger} from "./logger"
 import {httpsOverHttp} from "tunnel"
+import {logger} from "./logger"
 
 interface ErrorResponse {
     message: string
@@ -96,7 +96,6 @@ export class Http {
 
         const status = response.status
         if (status === 200) {
-            logger.success(`[HTTP] ${JSON.stringify(response.data)}`)
             onSuccess(response.data)
         } else {
             const error: ErrorResponse = response.data
@@ -109,7 +108,6 @@ export class Http {
     }
 
     private static handleHttpError(error, onError: (error: HttpError) => void) {
-        logger.error(`[API][ERROR]--> ${JSON.stringify(error)}`)
         if (isNotNull(error?.response?.data)) {
             const data = error.response.data
             onError({
