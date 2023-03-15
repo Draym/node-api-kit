@@ -1,10 +1,10 @@
-import {isNotEmpty, isNotNull} from "./checks"
+import {isNotNull} from "./checks"
 
 export function merge(d1: {}, d2: {}): any {
     const result = {...d1}
 
     for (const key in d2) {
-        if (isNotEmpty(d2[key])) {
+        if (isNotNull(d2[key])) {
             let value
             if (typeof d2[key] === 'object' && isNotNull(d1[key]) && typeof d1[key] === 'object') {
                 value = merge(d1[key], d2[key])
