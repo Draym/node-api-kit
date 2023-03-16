@@ -1,7 +1,7 @@
 import {NextFunction} from "express"
-import {isNull, throwIf} from "../utils/checks"
 import {empty, Response, success} from "../interfaces"
 import {Errors} from "../utils/errors"
+import {isNull, throwIf} from "@d-lab/common-kit"
 
 export async function handle<Req, Res>(this: (request: Req, res?: Response<Res>) => Promise<Res>, req: Req, res: Response<Res>, next: NextFunction) {
     try {

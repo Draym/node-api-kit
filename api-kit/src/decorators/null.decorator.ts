@@ -1,4 +1,4 @@
 import {ValidateIf} from "class-validator"
-import {isNotNull} from "../utils/checks"
+import {isNotNull} from "@d-lab/common-kit"
 
 export const SkipNull = () => ValidateIf((object, value) => isNotNull(value))

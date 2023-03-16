@@ -1,6 +1,6 @@
-import {isNotEmpty, isNotNull, isNull} from "../checks"
 import Op from "./op"
 import {Page} from "./page"
+import {isNotEmpty, isNotNull, isNull} from "@d-lab/common-kit"
 
 export function eq(filters: { [key: string]: string | number | boolean | null | undefined}): Filter {
     return new Filter().equals(filters)

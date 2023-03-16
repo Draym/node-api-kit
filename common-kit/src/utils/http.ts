@@ -1,9 +1,6 @@
 import axios, {AxiosRequestConfig, AxiosResponse, Method} from 'axios'
 import {isEmpty, isNotEmpty, isNotNull, isNull} from "./checks"
-import {URLSearchParams} from "url"
 import Auth from "../api/auth"
-import {httpsOverHttp} from "tunnel"
-import {logger} from "./logger"
 
 interface ErrorResponse {
     message: string
@@ -145,18 +142,13 @@ export class Http {
         const urlParameters: string = this.stringifyParameters(params.query)
         const finalEndpoint: string = this.fillEndpoint(endpoint, params.path)
         const url: string = this.createUrl(domain, finalEndpoint, urlParameters)
-        logger.debug(`[API_${method}]: ${url}`)
 
         const request: AxiosRequestConfig = {
             url: url,
             method: method,
             headers: headers,
-            withCredentials: true
-        }
-        if (isNotNull(ServerProxy.proxy)) {
-            request.httpsAgent = httpsOverHttp({
-                proxy: ServerProxy.proxy,
-            })
+            withCredentials: true,
+            proxy: ServerProxy.proxy
         }
 
         axios(request).then(response => {
@@ -179,8 +171,6 @@ export class Http {
         const finalEndpoint = this.fillEndpoint(endpoint, params.path)
         const url: string = this.createUrl(domain, finalEndpoint, urlParameters)
 
-        logger.debug(`[API_${method}]: ${url}`)
-
         const isJson = headers['Content-Type'].includes('application/json')
 
         const request: AxiosRequestConfig = {
@@ -188,12 +178,8 @@ export class Http {
             method: method,
             headers: headers,
             data: isJson ? params.body : this.buildUrlSearchParam(params.body),
-            withCredentials: true
-        }
-        if (isNotNull(ServerProxy.proxy)) {
-            request.httpsAgent = httpsOverHttp({
-                proxy: ServerProxy.proxy,
-            })
+            withCredentials: true,
+            proxy: ServerProxy.proxy
         }
 
         axios(request).then(response => {

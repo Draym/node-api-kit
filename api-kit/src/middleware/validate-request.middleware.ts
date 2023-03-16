@@ -1,8 +1,8 @@
 import {plainToInstance} from 'class-transformer'
 import {validate, ValidationError} from 'class-validator'
 import {RequestHandler} from 'express'
-import {isNotNull} from "../utils/checks";
 import {Errors} from "../utils/errors"
+import {isNotNull} from "@d-lab/common-kit"
 
 export const validateRequest = (
     type: any,
