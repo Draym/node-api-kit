@@ -1,7 +1,5 @@
 import axios, {AxiosRequestConfig, AxiosResponse, Method} from 'axios'
 import {isEmpty, isNotEmpty, isNotNull, isNull} from "./checks"
-import * as http from "http"
-import * as https from "https"
 import {URLSearchParams} from "url"
 import Auth from "../api/auth"
 import {httpsOverHttp} from "tunnel"
@@ -190,8 +188,6 @@ export class Http {
             method: method,
             headers: headers,
             data: isJson ? params.body : this.buildUrlSearchParam(params.body),
-            httpAgent: new http.Agent({ keepAlive: true }),
-            httpsAgent: new https.Agent({ keepAlive: true }),
             withCredentials: true
         }
         if (isNotNull(ServerProxy.proxy)) {
