@@ -1,6 +1,6 @@
 {
   "name": "@d-lab/api-kit",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "API utility KIT for Express",
   "author": {
     "name": "Kevin Andres",
