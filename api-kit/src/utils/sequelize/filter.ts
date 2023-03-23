@@ -2,7 +2,7 @@ import Op from "./op"
 import {Page} from "./page"
 import {isNotEmpty, isNotNull, isNull} from "@d-lab/common-kit"
 
-export function eq(filters: { [key: string]: string | number | boolean | null | undefined }): Filter {
+export function eq(filters: { [key: string]: string | number | boolean | object | null | undefined }): Filter {
     return new Filter().equals(filters)
 }
 
@@ -44,7 +44,7 @@ export class Filter {
     constructor() {
     }
 
-    public equals(filters: { [key: string]: string | number | boolean | null | undefined }): Filter {
+    public equals(filters: { [key: string]: string | number | boolean | object | null | undefined }): Filter {
         for (const key in filters) {
             if (isNotEmpty(filters[key])) {
                 this.where[key] = filters[key]
