@@ -11,7 +11,6 @@ export function merge(d1: {}, d2: {}): any {
             } else {
                 value = d2[key]
             }
-            console.log(key, value)
             result[key] = value
         }
     }
