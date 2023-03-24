@@ -1,11 +1,11 @@
 import {isNotEmpty} from "./checks"
 import {round} from "./math"
 
-export const numberOdfDaysUntil = (date: Date): number => {
-    return numberOdfDays(nowUTC(), date)
+export const numberOfDaysUntil = (date: Date): number => {
+    return numberOfDays(nowUTC(), date)
 }
 
-export const numberOdfDays = (d1: Date, d2: Date): number => {
+export const numberOfDays = (d1: Date, d2: Date): number => {
     let difference: number
     if (d1 > d2) {
         difference = d1.getTime() - d2.getTime()
