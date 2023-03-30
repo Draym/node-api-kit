@@ -1,3 +1,5 @@
+import {isNotEmpty} from "./checks"
+
 export class Regex {
     public static isNumber(data: string): boolean {
         return /\d$/.test(data)
@@ -6,9 +8,9 @@ export class Regex {
         return /\d/.test(data)
     }
     public static hasLowerCase(data: string): boolean {
-        return (/[a-z]/.test(data))
+        return isNotEmpty(data) && /[a-z]/.test(data)
     }
     public static hasUpperCase(data: string): boolean {
-        return (/[A-Z]/.test(data))
+        return isNotEmpty(data) && /[A-Z]/.test(data)
     }
 }
