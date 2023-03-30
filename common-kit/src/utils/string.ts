@@ -6,9 +6,9 @@ export function replaceAll(str: string, find: string, replace: string) {
     return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
 }
 
-export function orderWords(str: string) {
+export function orderWords(str: string, separator = " ") {
     return str
-        .split(" ")
+        .split(separator)
         .sort()
-        .join(" ")
+        .join(separator)
 }
