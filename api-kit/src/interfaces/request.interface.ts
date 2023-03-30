@@ -1,4 +1,4 @@
-import {AuthData, CallerData} from "./auth.interface"
+import {AuthData, AuthRawData, CallerData} from "./auth.interface"
 import {IsNumberString} from "class-validator"
 
 interface Body<T> {
@@ -15,6 +15,7 @@ interface Path<T> {
 
 interface Auth {
     auth: AuthData
+    authRaw: AuthRawData
     caller: CallerData
 }
 
