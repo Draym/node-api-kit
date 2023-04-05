@@ -8,6 +8,37 @@ describe("Object", () => {
         done()
     })
 
+    test("check merge with allow empty", done => {
+        const d1 = {
+            w1: '',
+            w2: 'death',
+            w3: '',
+            w4: '',
+            w5: '',
+            hue: 'blue',
+            initial: 'D'
+        }
+        const d2  = {
+            w1: 'planet',
+            w2: '',
+            w3: '',
+            w4: '',
+            w5: '',
+            hue: 'yellow',
+            initial: 'P'
+        }
+        expect(merge(d1, d2, true)).toEqual({
+            w1: 'planet',
+            w2: 'death',
+            w3: '',
+            w4: '',
+            w5: '',
+            hue: 'yellow',
+            initial: 'P'
+        })
+        done()
+    })
+
 
     test("strict merge object", done => {
         const d1 = {name: "test", v1: 1, v2: 3}

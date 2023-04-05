@@ -10,7 +10,7 @@ export function merge(d1: {}, d2: {}, ignoreEmpty = false): any {
     const result = {...d1}
 
     for (const key in d2) {
-        if (isNull(result[key]) || (ignoreEmpty && isNotEmpty(d2[key])) || isNotNull(d2[key])) {
+        if (isNull(result[key]) || (ignoreEmpty && isNotEmpty(d2[key])) || (!ignoreEmpty && isNotNull(d2[key]))) {
             let value
             if (typeof d2[key] === 'object' && isNotNull(d1[key]) && typeof d1[key] === 'object') {
                 value = merge(d1[key], d2[key])
