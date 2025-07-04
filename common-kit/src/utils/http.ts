@@ -39,7 +39,9 @@ export class HttpPostParam {
 
 export class Http {
 
-    private static stringifyParameters(parameters: { [key: string]: string | string[] | null | undefined } | null): string {
+    static stringifyParameters(parameters: {
+        [key: string]: boolean | boolean[] | number | number[] | string | string[] | null | undefined
+    } | null): string {
         if (isNull(parameters)) {
             return ''
         }
@@ -48,7 +50,7 @@ export class Http {
             const param = parameters[i]
             if (isNotNull(param)) {
                 if (Array.isArray(param)) {
-                    param.forEach((it: string) => {
+                    param.forEach((it: string | number | boolean) => {
                         if (result !== '')
                             result += '&'
                         result += `${i}=${encodeURIComponent(it)}`
